@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  postgres-db:
+    container_name: postgres-db
+    image: postgres:11
+    environment:
+      POSTGRES_DB: musala_test
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+    restart: always
+
+  mdsn-api:
+    container_name: mdsn-api
+    image: avelola/mdsn-api:0.0
+    environment:
+      - DATABASE_URL=jdbc:postgresql://postgres-db:5432/musala_test
+      - DATABASE_USERNAME=admin
+      - DATABASE_PASSWORD=admin
+    ports:
+      - "8080:8080"
+    restart: always
+    depends_on:
+      - postgres-db
+      
+
+ 
